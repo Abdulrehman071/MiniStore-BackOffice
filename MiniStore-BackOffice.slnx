@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="App.Core/App.Core.csproj" Id="2317143a-9ad9-487e-bb28-03f49a1e0ebd" />
+  <Project Path="App.WindowsApp/App.WindowsApp.csproj" Id="1a7fc7a1-d8a3-4b32-8b76-9c442f72f96e" />
+  <Project Path="App.WinForms/App.WinForms.csproj" Id="3a71c16b-0d36-4028-a86a-e4c7d50bb846" />
+</Solution>
