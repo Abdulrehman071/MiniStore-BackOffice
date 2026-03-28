@@ -14,12 +14,6 @@
 
   <ItemGroup>
     <Compile Update="Forms\MainForm.cs" />
-    <Compile Update="Forms\PDF.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\PDF2.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

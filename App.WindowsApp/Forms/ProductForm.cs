@@ -39,29 +39,41 @@ namespace App.WindowsApp.Forms
             {
                 btnSave.Visible = false;
             }
-                if (mode == ProductFormModeEnum.Edit || mode == ProductFormModeEnum.View)
-                {
-                   
-                    txtID.Text = p.Id;
-                    txtName.Text = p.Name;
-                    cmbCat.SelectedItem = p.Category;
-                    cmbProductStatus.SelectedItem = p.Status;
-                    nuPrice.Value = p.Price;
-                    nuStock.Value = p.Stock;
+            if (mode == ProductFormModeEnum.Edit || mode == ProductFormModeEnum.View)
+            {
 
-
-
-                }
-                
-
-
-
-
-
-
-
-
+                txtID.Text = p.Id;
+                txtName.Text = p.Name;
+                cmbCat.SelectedItem = p.Category;
+                cmbProductStatus.SelectedItem = p.Status;
+                nuPrice.Value = p.Price;
+                nuStock.Value = p.Stock;
             }
+
+        }
+
+              /// This method captures keyboard presses to move the "pointer" up and down.
+        
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // Move DOWN with the Down Arrow or Enter key
+            if (keyData == Keys.Down || keyData == Keys.Enter)
+            {
+                // SelectNextControl(currentControl, forward, tabStopOnly, nested, wrap)
+                this.SelectNextControl(this.ActiveControl, true, true, true, true);
+                return true;
+            }
+
+            // Move UP with the Up Arrow
+            if (keyData == Keys.Up)
+            {
+                this.SelectNextControl(this.ActiveControl, false, true, true, true);
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {

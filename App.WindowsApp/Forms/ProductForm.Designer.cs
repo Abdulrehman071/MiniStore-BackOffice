@@ -61,7 +61,7 @@
             label6.Location = new Point(3, 246);
             label6.Name = "label6";
             label6.Size = new Size(107, 50);
-            label6.TabIndex = 30;
+            label6.TabIndex = 13;
             label6.Text = "ID";
             label6.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -72,7 +72,7 @@
             label5.Location = new Point(3, 194);
             label5.Name = "label5";
             label5.Size = new Size(107, 52);
-            label5.TabIndex = 29;
+            label5.TabIndex = 12;
             label5.Text = "Status";
             label5.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -83,7 +83,7 @@
             label4.Location = new Point(3, 141);
             label4.Name = "label4";
             label4.Size = new Size(107, 53);
-            label4.TabIndex = 28;
+            label4.TabIndex = 11;
             label4.Text = "Stock";
             label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -94,7 +94,7 @@
             label3.Location = new Point(3, 96);
             label3.Name = "label3";
             label3.Size = new Size(107, 45);
-            label3.TabIndex = 27;
+            label3.TabIndex = 10;
             label3.Text = "Price";
             label3.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -105,7 +105,7 @@
             label2.Location = new Point(3, 48);
             label2.Name = "label2";
             label2.Size = new Size(107, 48);
-            label2.TabIndex = 26;
+            label2.TabIndex = 9;
             label2.Text = "Category";
             label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -115,7 +115,7 @@
             txtName.Margin = new Padding(3, 4, 3, 4);
             txtName.Name = "txtName";
             txtName.Size = new Size(380, 31);
-            txtName.TabIndex = 19;
+            txtName.TabIndex = 0;
             // 
             // txtID
             // 
@@ -124,7 +124,7 @@
             txtID.Name = "txtID";
             txtID.ReadOnly = true;
             txtID.Size = new Size(380, 31);
-            txtID.TabIndex = 20;
+            txtID.TabIndex = 5;
             // 
             // nuStock
             // 
@@ -132,7 +132,7 @@
             nuStock.Margin = new Padding(3, 4, 3, 4);
             nuStock.Name = "nuStock";
             nuStock.Size = new Size(380, 31);
-            nuStock.TabIndex = 22;
+            nuStock.TabIndex = 3;
             // 
             // cmbCat
             // 
@@ -141,7 +141,7 @@
             cmbCat.Margin = new Padding(3, 4, 3, 4);
             cmbCat.Name = "cmbCat";
             cmbCat.Size = new Size(380, 33);
-            cmbCat.TabIndex = 23;
+            cmbCat.TabIndex = 1;
             // 
             // nuPrice
             // 
@@ -149,7 +149,7 @@
             nuPrice.Margin = new Padding(3, 4, 3, 4);
             nuPrice.Name = "nuPrice";
             nuPrice.Size = new Size(380, 31);
-            nuPrice.TabIndex = 21;
+            nuPrice.TabIndex = 2;
             // 
             // cmbProductStatus
             // 
@@ -158,7 +158,7 @@
             cmbProductStatus.Margin = new Padding(3, 4, 3, 4);
             cmbProductStatus.Name = "cmbProductStatus";
             cmbProductStatus.Size = new Size(380, 33);
-            cmbProductStatus.TabIndex = 24;
+            cmbProductStatus.TabIndex = 4;
             // 
             // label1
             // 
@@ -167,7 +167,7 @@
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
             label1.Size = new Size(107, 48);
-            label1.TabIndex = 25;
+            label1.TabIndex = 8;
             label1.Text = "Name";
             label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -221,7 +221,7 @@
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
             panel2.Size = new Size(556, 93);
-            panel2.TabIndex = 5;
+            panel2.TabIndex = 15;
             // 
             // panel3
             // 
@@ -231,7 +231,7 @@
             panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
             panel3.Size = new Size(283, 66);
-            panel3.TabIndex = 0;
+            panel3.TabIndex = 14;
             // 
             // btnSave
             // 
@@ -240,7 +240,7 @@
             btnSave.Margin = new Padding(3, 4, 3, 4);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(90, 43);
-            btnSave.TabIndex = 1;
+            btnSave.TabIndex = 6;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
             // 
@@ -250,7 +250,7 @@
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(94, 43);
-            button1.TabIndex = 0;
+            button1.TabIndex = 7;
             button1.Text = "Cancel";
             button1.UseVisualStyleBackColor = true;
             // 
@@ -272,6 +272,9 @@
             panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
             ResumeLayout(false);
+
+
+
         }
 
         #endregion
