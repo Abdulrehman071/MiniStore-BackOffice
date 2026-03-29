@@ -1,204 +1,136 @@
 ﻿using App.Core.Contracts;
 using App.Core.Models;
-using App.Core.Models;
 using App.Core.Utilities;
 using App.WindowsApp.Forms;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace App.WindowsApp.views
 {
     public partial class ProductView : UserControl
     {
         private BindingSource _dgvBindingSource = new BindingSource();
-        private IProductService _productService;
+        private IProductService _service;
 
-        // Product list
-        private List<Product> _products = new List<Product>();
-
-        // Constructor (single correct one)
-        public ProductView(IProductService productService)
+        // Constructor
+        public ProductView(IProductService service)
         {
             InitializeComponent();
-            _productService = productService;
-
-            this.Load += ProductView_Load;
+            _service = service;
         }
 
         // Load event
         private void ProductView_Load(object sender, EventArgs e)
         {
-            // Category ComboBox
-            cmbCategory.Items.Clear();
-            cmbCategory.Items.Add("--ALL--");
-            cmbCategory.Items.AddRange(Enum.GetNames(typeof(ProductCategoryEnum)));
-            cmbCategory.SelectedIndex = 0;
-
-            // Stock Status ComboBox
-            cmbStockStatus.Items.Clear();
-            cmbStockStatus.Items.Add("--ALL--");
-            cmbStockStatus.Items.AddRange(Enum.GetNames(typeof(ProductStatusEnum)));
-            cmbStockStatus.SelectedIndex = 0;
-
-            // Load products into grid
+            SetupFilters();
             LoadProducts();
         }
 
-        // Load + bind data
+        private void SetupFilters()
+        {
+            // Set up Category ComboBox
+            var categories = new List<object> { "--ALL--" };
+            categories.AddRange(Enum.GetValues(typeof(ProductCategoryEnum)).Cast<object>());
+            cmbCategory.DataSource = categories;
+            cmbCategory.SelectedIndex = 0;
+
+            // Set up Stock Status ComboBox
+            var stockStatus = new List<object> { "--ALL--" };
+            stockStatus.AddRange(Enum.GetValues(typeof(ProductStatusEnum)).Cast<object>());
+            cmbStockStatus.DataSource = stockStatus;
+            cmbStockStatus.SelectedIndex = 0;
+        }
+
         private void LoadProducts()
         {
-            GenerateFakeProducts();
-
-            _dgvBindingSource.DataSource = _products;
-
+            // Initial load of all products
+            _dgvBindingSource.DataSource = _service.GetAll();
             dgvProducts.AutoGenerateColumns = true;
             dgvProducts.DataSource = _dgvBindingSource;
             dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-
-            //        dgvProducts.AutoGenerateColumns = true;
-            //       dgvProducts.DataSource = null;
-            //      dgvProducts.DataSource = _products;
-            //      dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // Fake data generator
-        public void GenerateFakeProducts()
+        private void RefreshGrid()
         {
-            _products.Clear();
+            string searchText = txtSearch.Text;
 
-            _products.Add(new Product
+            // Handle Category Selection
+            ProductCategoryEnum? selectedCategory = null;
+            if (cmbCategory.SelectedIndex > 0 && cmbCategory.SelectedItem is ProductCategoryEnum cat)
             {
-                Id = GenerateId(),
-                Name = "Laptop",
-                Category = ProductCategoryEnum.Electronics,
-                Price = 90000.00m,
-                Stock = 10,
-                Status = ProductStatusEnum.Active
-            });
+                selectedCategory = cat;
+            }
 
-            _products.Add(new Product
+            // Handle Status Selection
+            ProductStatusEnum? selectedStatus = null;
+            if (cmbStockStatus.SelectedIndex > 0 && cmbStockStatus.SelectedItem is ProductStatusEnum st)
             {
-                Id = GenerateId(),
-                Name = "Jacket",
-                Category = ProductCategoryEnum.Clothing,
-                Price = 15000.00m,
-                Stock = 15,
-                Status = ProductStatusEnum.Active
-            });
+                selectedStatus = st;
+            }
 
-            _products.Add(new Product
-            {
-                Id = GenerateId(),
-                Name = "USB",
-                Category = ProductCategoryEnum.Electronics,
-                Price = 1000.00m,
-                Stock = 100,
-                Status = ProductStatusEnum.Active
-            });
-
-
-            _products.Add(new Product
-            {
-                Id = GenerateId(),
-                Name = "Hoodie",
-                Category = ProductCategoryEnum.Clothing,
-                Price = 7000.00m,
-                Stock = 10,
-                Status = ProductStatusEnum.Low
-            });
-
-
-            _products.Add(new Product
-            {
-                Id = GenerateId(),
-                Name = "Chocolates",
-                Category = ProductCategoryEnum.Food,
-                Price = 1500.00m,
-                Stock = 25,
-                Status = ProductStatusEnum.Active
-            });
-
-
-            _products.Add(new Product
-            {
-                Id = GenerateId(),
-                Name = "Sticky Notes",
-                Category = ProductCategoryEnum.Stationery,
-                Price = 250.00m,
-                Stock = 20,
-                Status = ProductStatusEnum.Low
-            });
-                
-                
-                
-                
-
-            _products.Add(new Product
-            {
-                Id = GenerateId(),
-                Name = "Juice",
-                Category = ProductCategoryEnum.Food,
-                Price = 250.00m,
-                Stock = 30,
-                Status = ProductStatusEnum.Active
-            });
-        }
-
-        // ID generator
-        private string GenerateId()
-        {
-            return "P-" + Guid.NewGuid().ToString("N").Substring(0, 6);
-        }
-
-        // ComboBox events (optional)
-        private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void cmbStockStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // Do nothing (UserControl should not open itself)
+            // Call the service with all three filters
+            _dgvBindingSource.DataSource = _service.Search(searchText, selectedCategory, selectedStatus);
         }
 
         private void tsbAdd_Click(object sender, EventArgs e)
         {
-            ProductForm prodForm = new ProductForm(ProductFormModeEnum.Add, null  );
-            prodForm.ShowDialog();
-
+            // Pass 'null' for a new product in Add mode
+            ProductForm prodForm = new ProductForm(ProductFormModeEnum.Add, null, _service);
+            if (prodForm.ShowDialog() == DialogResult.OK || prodForm.DialogResult == DialogResult.Cancel)
+            {
+                // Refresh after closing to show the new product
+                RefreshGrid();
+            }
         }
 
         private void tsbEdit_Click(object sender, EventArgs e)
         {
-            Product? SelectedProduct= _dgvBindingSource.Current as Product;
-            if (SelectedProduct != null)
+            Product selectedProduct = _dgvBindingSource.Current as Product;
+            if (selectedProduct != null)
             {
-                ProductForm prodForm = new ProductForm(ProductFormModeEnum.Edit, SelectedProduct);
+                ProductForm prodForm = new ProductForm(ProductFormModeEnum.Edit, selectedProduct, _service);
                 prodForm.ShowDialog();
+                RefreshGrid();
             }
-            //     ProductForm prodForm = new ProductForm(ProductFormModeEnum.Edit, null);
-            //  prodForm.ShowDialog();
-
+            else
+            {
+                MessageBox.Show("Please select a product to edit.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void tsbView_Click(object sender, EventArgs e)
         {
-            Product? SelectedProduct = _dgvBindingSource.Current as Product;
-
-            if (SelectedProduct != null)
+            Product selectedProduct = _dgvBindingSource.Current as Product;
+            if (selectedProduct != null)
             {
-                ProductForm prodForm = new ProductForm(ProductFormModeEnum.View, SelectedProduct);
+                ProductForm prodForm = new ProductForm(ProductFormModeEnum.View, selectedProduct, _service);
                 prodForm.ShowDialog();
             }
         }
 
+        // Event Handlers for Real-time Filtering
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            RefreshGrid();
+        }
 
+        private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshGrid();
+        }
+
+        private void cmbStockStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshGrid();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Placeholder for any specific refresh button logic if needed
+            RefreshGrid();
+        }
     }
-    
 }

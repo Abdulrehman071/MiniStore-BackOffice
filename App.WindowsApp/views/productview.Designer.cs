@@ -43,7 +43,7 @@
             label2 = new Label();
             label1 = new Label();
             label3 = new Label();
-            textBox1 = new TextBox();
+            txtSearch = new TextBox();
             panel1 = new Panel();
             dgvProducts = new DataGridView();
             ColId = new DataGridViewTextBoxColumn();
@@ -174,7 +174,7 @@
             tableLayoutPanel2.Controls.Add(label1, 0, 0);
             tableLayoutPanel2.Controls.Add(label3, 2, 0);
             tableLayoutPanel2.Controls.Add(cmbCategory, 1, 1);
-            tableLayoutPanel2.Controls.Add(textBox1, 0, 1);
+            tableLayoutPanel2.Controls.Add(txtSearch, 0, 1);
             tableLayoutPanel2.Controls.Add(cmbStockStatus, 2, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(21, 78);
@@ -216,13 +216,15 @@
             label3.TabIndex = 2;
             label3.Text = "Stock Status";
             // 
-            // textBox1
+            // txtSearch
             // 
-            textBox1.Location = new Point(3, 42);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(362, 33);
-            textBox1.TabIndex = 5;
+            txtSearch.Location = new Point(3, 42);
+            txtSearch.Margin = new Padding(3, 4, 3, 4);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(362, 33);
+            txtSearch.TabIndex = 5;
+    //        txtSearch.Click += txtSearch_Click;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // panel1
             // 
@@ -359,5 +361,6 @@
         private DataGridViewTextBoxColumn ColPrice;
         private DataGridViewTextBoxColumn ColStock;
         private DataGridViewTextBoxColumn ColStatus;
+        private TextBox txtSearch;
     }
 }

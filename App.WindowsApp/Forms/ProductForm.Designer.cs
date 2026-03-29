@@ -243,6 +243,7 @@
             btnSave.TabIndex = 6;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // button1
             // 
@@ -253,6 +254,7 @@
             button1.TabIndex = 7;
             button1.Text = "Cancel";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += btnCancel_Click;
             // 
             // ProductForm
             // 
@@ -264,6 +266,7 @@
             Name = "ProductForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ProductForm";
+            Click += btnSave_Click;
             ((System.ComponentModel.ISupportInitialize)nuStock).EndInit();
             ((System.ComponentModel.ISupportInitialize)nuPrice).EndInit();
             panel1.ResumeLayout(false);
